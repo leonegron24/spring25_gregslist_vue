@@ -35,7 +35,7 @@ async function getCars() {
       </div>
     </div>
   </section>
-  <!-- NOTE will only show this container if the user is logged in (there is an account object in the appstate) -->
+  <!-- NOTE will only show this container if the user is logged in (if there is an account object in the appstate) -->
   <section v-if="account" class="container">
     <div class="row align-items-center">
       <div class="col-md-6">

@@ -3,6 +3,7 @@ import { api } from "./AxiosService.js"
 import { Car } from "@/models/Car.js"
 import { AppState } from "@/AppState.js"
 
+// REVIEW our service here is basically identical to the service from async/await week
 class CarsService {
 
   async getCars() {
@@ -21,7 +22,7 @@ class CarsService {
 
   async deleteCar(carId) {
     const response = await api.delete(`api/cars/${carId}`)
-    logger.log('DELETED CAR!', response.data)
+    logger.log('DELETED CAR', response.data)
     const cars = AppState.cars
     const carIndex = cars.findIndex(car => car.id == carId)
     cars.splice(carIndex, 1)

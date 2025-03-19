@@ -17,9 +17,10 @@ const editableCarData = ref({
 
 async function createCar() {
   try {
-    // NOTE make sure use .value!!!!
+    // NOTE make sure you use .value! The .value is what's stored inside of the ref object
     const carData = editableCarData.value
     await carsService.createCar(carData)
+    // NOTE clears form
     editableCarData.value = {
       make: '',
       model: '',
