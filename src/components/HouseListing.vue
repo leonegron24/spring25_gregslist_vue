@@ -33,13 +33,16 @@ async function deleteHouse(houseId) {
 <template>
     <div class="row shadow-lg mb-4 house-border">
       <div class="col-md-5 px-0">
-        <img :src="houseProp.imgUrl" :alt="`A picture of a ${houseProp.year} ${houseProp.bedrooms} ${houseProp.bathrooms}`" class="w-100">
+        <img :src="houseProp.imgUrl" :alt="`A picture of a house built in ${houseProp.year} with ${houseProp.bedrooms} Bedroom(s) and  ${houseProp.bathrooms} Bathroom(s)`" class="w-100">
       </div>
       <div class="col-md-7">
         <div class="p-3 h-100 d-flex flex-column justify-content-between">
           <div>
             <div class="d-flex justify-content-between">
-              <p class="fs-3">{{ houseProp.year }} Bedrooms: {{ houseProp.bedrooms }} Bathrooms: {{ houseProp.bathrooms }}</p>
+              <div class="d-flex w-50 justify-content-around">
+                <p>Year: {{ houseProp.year }}, </p>
+                <p>Bedrooms: {{ houseProp.bedrooms }},  Bathrooms: {{ houseProp.bathrooms }}</p>
+              </div>
               <small>{{ houseProp.createdAt.toLocaleDateString() }}</small>
             </div>
             <p class="fs-3">{{ '$' + houseProp.price.toLocaleString() }}</p>

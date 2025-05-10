@@ -20,7 +20,7 @@ export class House{
         this.bedrooms = data.bedrooms
         this.bathrooms = data.bathrooms
         this.levels = data.levels
-        this.imgUrl = data.imgUrl
+        this.imgUrl = data.imgUrl || 'https://media.istockphoto.com/id/2170456340/photo/neighborhood-new-homes-sunset-north-carolina-wide-angle.webp?a=1&b=1&s=612x612&w=0&k=20&c=ftpd-CRS1dogmkLG5hY0NqUdBGQSf2lp4ywOTAFvTUg='
         this.year = data.year
         this.price = data.price
         this.description = data.description
