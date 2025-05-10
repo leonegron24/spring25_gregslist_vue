@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import HouseForm from '@/components/HouseForm.vue';
 import HouseListing from '@/components/HouseListing.vue';
 import { houseService } from '@/services/HouseService.js';
 import { logger } from '@/utils/Logger.js';
@@ -39,9 +40,9 @@ async function getHouses(){
   <!-- NOTE will only show this container if the user is logged in (if there is an account object in the appstate) -->
   <section v-if="account" class="container">
     <div class="row align-items-center">
-      <!-- <div class="col-md-6">
-        <CarForm />
-      </div> -->
+      <div class="col-md-6">
+        <HouseForm />
+      </div>
       <div class="col-md-6">
         <div class="text-center my-3">
           <img
