@@ -18,11 +18,31 @@ watch(theme, () => {
 
 <template>
   <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue">
-    <div class="container gap-2">
+    <div class="container gap-5">
+      <!-- Home -->
       <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
         <img class="navbar-brand" alt="logo" src="/img/cw-logo.png" height="45" />
-        <b class="fs-5">Gregslist</b>
+        <b class="fs-5">Home</b>
       </RouterLink>
+
+      <!-- Houses -->
+      <RouterLink :to ="{name: 'Houses'}"
+      class="d-flex align-items-center text-light">
+        <b class="fs-5">Houses</b>
+      </RouterLink>
+
+      <!-- Cars -->
+      <RouterLink :to ="{name: 'Cars'}"
+      class="d-flex align-items-center text-light">
+        <b class="fs-5">Cars</b>
+      </RouterLink>
+
+      <!-- Jobs -->
+      <RouterLink :to ="{name: 'Jobs'}"
+      class="d-flex align-items-center text-light">
+        <b class="fs-5">Jobs</b>
+      </RouterLink>
+
       <!-- collapse button -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-links"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
