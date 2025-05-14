@@ -5,7 +5,7 @@ import HouseListing from '@/components/HouseListing.vue';
 import { houseService } from '@/services/HouseService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const houses = computed(() => AppState.houses)
 const account = computed(() => AppState.account)
@@ -13,6 +13,37 @@ const account = computed(() => AppState.account)
 onMounted(() => {
   getHouses()
 })
+
+const editableHouseData = ref({
+    bedrooms: 0,
+    bathrooms: 0,
+    levels: 0,
+    imgUrl: '',
+    year: 0,
+    price: 0,
+    description: ''
+})
+
+async function createHouse() {
+  try {
+    // NOTE make sure you use .value! The .value is what's stored inside of the ref object
+    const houseData = editableHouseData.value
+    await houseService.createHouse(houseData)
+    // NOTE clears form
+    editableHouseData.value = {
+        bedrooms: 0,
+        bathrooms: 0,
+        levels: 0,
+        imgUrl: '',
+        year: 0,
+        price: 0,
+        description: ''
+    }
+  } catch (error) {
+    Pop.error(error, 'Could not create house')
+    logger.error('COULD NOT CREATE HOUSE', error)
+  }
+}
 
 async function getHouses(){
     try {
@@ -28,9 +59,9 @@ async function getHouses(){
 
 
 <template>
-  <section class="container">
+  <section class="container-fluid">
     <div class="row">
-      <div class="col-12">
+      <div class="col-md-12">
         <div class="text-center">
           <h1 class="display-3">Houses</h1>
         </div>
@@ -41,7 +72,7 @@ async function getHouses(){
   <section v-if="account" class="container">
     <div class="row align-items-center">
       <div class="col-md-6">
-        <HouseForm />
+        <HouseForm @submit.prevent ="createHouse()" />
       </div>
       <div class="col-md-6">
         <div class="text-center my-3">

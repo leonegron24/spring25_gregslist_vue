@@ -1,8 +1,21 @@
 <script setup>
+import { Car } from '@/models/Car.js';
 import { carsService } from '@/services/CarsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+const props = defineProps({
+  carUpdateData: {type: Car}
+})
+
+onMounted(()=> {
+  if (!props.carUpdateData){
+    return
+  }else{
+    editableCarData.value = {...props.carUpdateData}
+  }
+})
 
 const editableCarData = ref({
   make: '',
@@ -37,11 +50,23 @@ async function createCar() {
   }
 }
 
+async function editCar(){
+  console.log('editing')
+}
+
+function handleSubmit(){
+  if (props.carUpdateData){
+    editCar()
+  }else{
+    createCar()
+  }
+}
+
 </script>
 
 
 <template>
-  <form @submit.prevent="createCar()">
+  <form @submit.prevent="handleSubmit()">
     <div class="mb-3">
       <label for="carMake">Car Make</label>
       <input v-model="editableCarData.make" id="carMake" name="make" type="text" required maxlength="500"

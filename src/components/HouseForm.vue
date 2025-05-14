@@ -1,46 +1,21 @@
 <script setup>
 
-import { houseService } from '@/services/HouseService.js';
-import { logger } from '@/utils/Logger.js';
-import { Pop } from '@/utils/Pop.js';
+import { House } from '@/models/House.js';
 import { ref } from 'vue';
 
-const editableHouseData = ref({
-    bedrooms: 0,
-    bathrooms: 0,
-    levels: 0,
-    imgUrl: '',
-    year: 0,
-    price: 0,
-    description: ''
+const props = defineProps({
+  initialData: { type: House }
 })
 
-async function createHouse() {
-  try {
-    // NOTE make sure you use .value! The .value is what's stored inside of the ref object
-    const houseData = editableHouseData.value
-    await houseService.createHouse(houseData)
-    // NOTE clears form
-    editableHouseData.value = {
-        bedrooms: 0,
-        bathrooms: 0,
-        levels: 0,
-        imgUrl: '',
-        year: 0,
-        price: 0,
-        description: ''
-    }
-  } catch (error) {
-    Pop.error(error, 'Could not create house')
-    logger.error('COULD NOT CREATE HOUSE', error)
-  }
-}
+
+const editableHouseData = ref({ ...props.initialData })
+
 
 </script>
 
 
 <template>
-  <form class="container" @submit.prevent="createHouse()">
+  <form class="container" @submit.prevent="$emit('submit', editableHouseData)">
     <div class="row mb-3">
       <!-- Decription -->
       <label for="houseDescription">Description</label>
@@ -81,7 +56,7 @@ async function createHouse() {
     </div>
     <div class="mb-3 col-md-5">
       <label for="houseImgUrl">Image URL</label>
-      <input type="url" name="imgUrl" id="houseImgUrl">
+      <input type="url" v-model="editableHouseData.imgUrl" name="imgUrl" id="houseImgUrl">
     </div>
       </div>
     <div class="text-end">

@@ -4,13 +4,15 @@ import { Car } from '@/models/Car.js';
 import { carsService } from '@/services/CarsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import CarForm from './CarForm.vue';
 
 defineProps({
   carProp: { type: Car, required: true }
 })
 
 const account = computed(() => AppState.account)
+const toggleForm = ref(false)
 
 async function deleteCar(carId) {
   try {
@@ -26,6 +28,11 @@ async function deleteCar(carId) {
     logger.error('COULD NOT DELETE CAR', error)
   }
 }
+
+function showForm(){
+  toggleForm.value = !toggleForm.value
+}
+
 </script>
 
 
@@ -36,7 +43,7 @@ async function deleteCar(carId) {
     </div>
     <div class="col-md-7">
       <div class="p-3 h-100 d-flex flex-column justify-content-between">
-        <div>
+        <div v-if="!toggleForm">
           <div class="d-flex justify-content-between">
             <p class="fs-3">{{ carProp.year }} {{ carProp.make }} {{ carProp.model }}</p>
             <small>{{ carProp.createdAt.toLocaleDateString() }}</small>
@@ -46,6 +53,9 @@ async function deleteCar(carId) {
           <p v-else>A lovely car</p>
           <p>Engine: {{ carProp.engineType }}</p>
         </div>
+        <div v-else>
+          <CarForm :carUpdateData="carProp"/>
+        </div>
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <!-- <button v-if="account && carProp.creatorId == account?.id" @click="deleteCar(carProp.id)" -->
@@ -53,6 +63,10 @@ async function deleteCar(carId) {
             <button v-if="carProp.creatorId == account?.id" @click="deleteCar(carProp.id)"
               class="btn btn-outline-danger" type="button">
               Delete Car
+            </button>
+            <button v-if="carProp.creatorId == account?.id" @click="showForm()"
+              class="btn btn-outline-primary mx-2" type="button">
+              Edit Car
             </button>
           </div>
           <div class="d-flex align-items-center gap-3">
